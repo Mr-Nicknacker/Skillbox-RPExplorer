@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 6285245611193921355}
   - component: {fileID: 1171267284379948873}
   - component: {fileID: 8634845043984098719}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FuelPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6285245611193921355
 Transform:
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4997a1b6231623a43916da36b0170ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuelGiver
+  _fuelToGive: 0
 --- !u!65 &8634845043984098719
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78,12 +79,12 @@ GameObject:
   - component: {fileID: 5707695314725255250}
   - component: {fileID: 116301999663002888}
   - component: {fileID: 1239929543060502917}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fuel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5707695314725255250
 Transform:
@@ -166,12 +167,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1221429323714998560}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1221429323714998560
 Transform:

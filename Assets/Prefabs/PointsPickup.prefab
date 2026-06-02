@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8745367866974023535}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8745367866974023535
 Transform:
@@ -43,12 +43,12 @@ GameObject:
   - component: {fileID: 2855893475466134022}
   - component: {fileID: 2752851127866561380}
   - component: {fileID: 5265028493806128518}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PointsPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2855893475466134022
 Transform:
@@ -111,12 +111,12 @@ GameObject:
   - component: {fileID: 2010186062288169174}
   - component: {fileID: 2667681699828250064}
   - component: {fileID: 805219427962374502}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PointsObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2010186062288169174
 Transform:

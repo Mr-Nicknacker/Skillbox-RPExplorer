@@ -12,7 +12,7 @@ public class DroneDestructor : MonoBehaviour
     [SerializeField] private float _explosionForce;
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explodedPartsDestroyTime;
-    [SerializeField] private float EXPLOSION_UPWARDS_MODIFIER = 0f;
+    [SerializeField] private float _explosionUpwardsModifier = 0f;
 
     public void Detonate()
     {
@@ -47,7 +47,7 @@ public class DroneDestructor : MonoBehaviour
         explodedPart.AddExplosionForce(_explosionForce,
             transform.position,
             _explosionRadius,
-            EXPLOSION_UPWARDS_MODIFIER,
+            _explosionUpwardsModifier,
             ForceMode.VelocityChange);
     }
     private IEnumerator HideExplodedParts(List<Transform> explodedParts)
