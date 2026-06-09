@@ -3,10 +3,19 @@ using UnityEngine;
 
 public class PlayerScore
 {
+    private static PlayerScore instance;
     private static int _currentScore;
 
     public static event Action<int> onScoreChange;
 
+    public static PlayerScore GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new PlayerScore();
+        }
+        return instance;
+    }
     public void ResetScore()
     {
         _currentScore = 0;
@@ -22,4 +31,5 @@ public class PlayerScore
         _currentScore += absScore;
         onScoreChange?.Invoke(_currentScore);
     }
+
 }

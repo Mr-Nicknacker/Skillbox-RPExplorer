@@ -21,15 +21,15 @@ public class DroneController : MonoBehaviour
         Crashed,
         Landed
     }
+
     private Rigidbody _droneRigidbody;
     private DroneFuel _droneFuel;
     private DroneDestructor _droneDestructor;
-
     private DroneState _droneState;
     private LandingState _landingState;
 
-    public event Action<int> onPointsPickup;
-    public event Action<float> onFuelPickup;
+    public static event Action<int> onPointsPickup;
+    public static event Action<float> onFuelPickup;
     public static event Action<LandingState> onLandingStateChange;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class DroneController : MonoBehaviour
         _droneRigidbody.useGravity = false;
 
         _droneFuel = GetComponent<DroneFuel>();
-        _droneState = DroneState.WatingToStart;
+        SetDroneState(DroneState.WatingToStart);
 
         _droneDestructor = GetComponent<DroneDestructor>();
     }

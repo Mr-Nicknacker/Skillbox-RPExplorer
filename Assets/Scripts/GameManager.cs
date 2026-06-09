@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     private void ResetGame()
     {
-        //PlayerScore.ResetScore();
+        PlayerScore.GetInstance().ResetScore();
         //DroneFuel.ResetFuel();
         SceneManager.LoadScene(1);
     }
