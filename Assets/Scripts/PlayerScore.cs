@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class PlayerScore
 {
-    private static PlayerScore instance;
+    private static PlayerScore _instance;
     private static int _currentScore;
 
     public static event Action<int> onScoreChange;
 
     public static PlayerScore GetInstance()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = new PlayerScore();
+            _instance = new PlayerScore();
         }
-        return instance;
+        return _instance;
     }
     public void ResetScore()
     {

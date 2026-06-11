@@ -7,7 +7,6 @@ public class StatsDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statsNumbers;
     [SerializeField] private Image _fuelBar;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DroneFuel.onFuelChangeNormalized += DisplayFuel;

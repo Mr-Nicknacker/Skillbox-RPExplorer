@@ -8,14 +8,17 @@ public class GameManager : MonoBehaviour
     [Header("UI Canvases")]
     [SerializeField] private GameObject _victoryWindowCanvas;
     [SerializeField] private GameObject _defeatWindowCanvas;
+    [SerializeField] private GameObject _pauseWindowCanvas;
     [SerializeField] private GameObject _gameHUD;
     [Header("UI Buttons")]
-    [SerializeField] private Button _resetGameButton;
-    [SerializeField] private Button _retryButton;
+    [SerializeField] private Button _pauseButton;
+    [SerializeField] private Button _resumeGame;
     [SerializeField] private Button _nextLevelButton;
-
+    [SerializeField] private Button _toMainMenuButton;
+    [Header("Delay to show a screen")]
     [SerializeField] private float _timeToShowVictory;
     [SerializeField] private float _timeToShowDefeat;
+
     private void Awake()
     {
         HandleButtonInput();
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         DroneController.onLandingStateChange += Drone_onLandingStateChange;
+        RetryButtonNotifier.OnRetryButtonClick += ResetGame;
     }
 
     private void Drone_onLandingStateChange(DroneController.LandingState state)
@@ -53,8 +57,7 @@ public class GameManager : MonoBehaviour
     {
         _defeatWindowCanvas.SetActive(false);
         yield return new WaitForSeconds(_timeToShowVictory);
-        _victoryWindowCanvas.SetActive(true);
-        
+        _victoryWindowCanvas.SetActive(true);       
     }
     private void ShowGameWindow()
     {
@@ -65,18 +68,35 @@ public class GameManager : MonoBehaviour
     private void ResetGame()
     {
         PlayerScore.GetInstance().ResetScore();
-        //DroneFuel.ResetFuel();
         SceneManager.LoadScene(1);
+        UnPauseGame();
+    }
+    private void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+        _gameHUD.SetActive(false);
+        _victoryWindowCanvas.SetActive(false);
+        _defeatWindowCanvas.gameObject.SetActive(false);
+        _pauseWindowCanvas.SetActive(true);
+    }
+    private void UnPauseGame()
+    {
+        Time.timeScale = 1.0f;
+        _gameHUD.SetActive(true);
+        _pauseWindowCanvas.SetActive(false);
     }
     private void HandleButtonInput()
     {
-        _resetGameButton.onClick.AddListener(ResetGame);
-        _retryButton.onClick.AddListener(ResetGame);
         _nextLevelButton.onClick.AddListener(ResetGame);
+        _toMainMenuButton.onClick.AddListener(OpenMainMenu);
+        _pauseButton.onClick.AddListener(PauseGame);
+        _resumeGame.onClick.AddListener(UnPauseGame);
+
     }
     private void OnDestroy()
     {
         DroneController.onLandingStateChange -= Drone_onLandingStateChange;
+        RetryButtonNotifier.OnRetryButtonClick -= ResetGame;
         StopAllCoroutines();
     }
 }

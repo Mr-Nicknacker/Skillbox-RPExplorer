@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class DroneFuel : MonoBehaviour
@@ -9,10 +11,6 @@ public class DroneFuel : MonoBehaviour
     private float _currentFuel;
 
     public static event Action<float> onFuelChangeNormalized;
-    private void Start()
-    {
-        ResetFuel();
-    }
 
     public void ResetFuel()
     {

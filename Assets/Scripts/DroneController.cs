@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class DroneController : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class DroneController : MonoBehaviour
     [SerializeField] private float _landingSpeedThreshold;
     [SerializeField] private float _landingAngleThreshold;
 
+    private Rigidbody _droneRigidbody;
+    private DroneFuel _droneFuel;
+    private DroneDestructor _droneDestructor;
+    private DroneState _droneState;
 
     private enum DroneState
     {
@@ -20,13 +25,7 @@ public class DroneController : MonoBehaviour
     {
         Crashed,
         Landed
-    }
-
-    private Rigidbody _droneRigidbody;
-    private DroneFuel _droneFuel;
-    private DroneDestructor _droneDestructor;
-    private DroneState _droneState;
-    private LandingState _landingState;
+    }     
 
     public static event Action<int> onPointsPickup;
     public static event Action<float> onFuelPickup;
@@ -39,9 +38,10 @@ public class DroneController : MonoBehaviour
         _droneRigidbody.useGravity = false;
 
         _droneFuel = GetComponent<DroneFuel>();
-        SetDroneState(DroneState.WatingToStart);
+        _droneState=DroneState.WatingToStart;
 
         _droneDestructor = GetComponent<DroneDestructor>();
+        _droneFuel.ResetFuel();
     }
     private void FixedUpdate()
     {
@@ -53,7 +53,7 @@ public class DroneController : MonoBehaviour
                     Keyboard.current.dKey.isPressed)
                 {
                     _droneRigidbody.useGravity = true;
-                    SetDroneState(DroneState.Normal);
+                    _droneState = DroneState.Normal;
                 }
                 break;
             case DroneState.Normal:
@@ -91,7 +91,7 @@ public class DroneController : MonoBehaviour
 
     private void ApplyUpForce()
     {
-        _droneRigidbody.AddForce(transform.up * _upForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+        _droneRigidbody.AddForce(transform.up * _upForce * Time.fixedDeltaTime, ForceMode.Acceleration);    
     }
     private void ApplyRightYaw()
     {
@@ -108,20 +108,20 @@ public class DroneController : MonoBehaviour
 
         if (landingSpeed > _landingSpeedThreshold || landingAngleCoef < _landingAngleThreshold)
         {
-            SetDroneState(DroneState.GameOver);
-            SetLandingState(LandingState.Crashed);
+            _droneState = DroneState.GameOver;
+            onLandingStateChange?.Invoke(LandingState.Crashed);
             _droneDestructor.Detonate();
             return;
         }
 
         if (collision.gameObject.TryGetComponent<LandingPad>(out LandingPad landingPad))
         {
-            SetDroneState(DroneState.GameOver);
-            SetLandingState(LandingState.Landed);
+            _droneState = DroneState.GameOver;
+            onLandingStateChange?.Invoke(LandingState.Landed);
         }
         else
         {
-            SetLandingState(LandingState.Crashed);
+            onLandingStateChange?.Invoke(LandingState.Crashed);
             _droneDestructor.Detonate();
         }
     }
@@ -139,14 +139,5 @@ public class DroneController : MonoBehaviour
             onFuelPickup?.Invoke(fuelReceived);
             fuelPickup.DestroySelf();
         }
-    }
-    private void SetDroneState(DroneState newState)
-    {
-        _droneState = newState;
-    }
-    private void SetLandingState(LandingState newState)
-    {
-        _landingState = newState;
-        onLandingStateChange?.Invoke(newState);
     }
 }
